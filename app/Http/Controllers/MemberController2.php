@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Referal;
 use App\Statik;
 use App\PinMember;
+use App\PinMemberB;
 use App\UserProfile;
 use App\BankMember;
 use App\TransferReferal;
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\News;
 
-class MemberController extends Controller{
+class MemberController2 extends Controller{
     
     public function __construct(){
         //$this->middleware('auth', ['except' => 'welcome']);
@@ -37,17 +38,18 @@ class MemberController extends Controller{
     
     public function getNewRegister() {
         //cek punya pin ga
-        $pin = New PinMember;
+        $pin = New PinMemberB;
         $dataLogin = $this->user;
         $countFreePin = $pin->getCountFreePIN($dataLogin->id);
         $cekHavePin = $pin->getMemberHavePIN($dataLogin->id);
+        
         $havePin = ($countFreePin > 0 && !empty($cekHavePin));
         if($havePin){
             $this->setPageHeader('Register', 'New Member');
         } else {
             //$this->setPageHeader('Register', 'You don\'t have a pin to register new member, please order pin');
             $pesan = $this->setPesanFlash('error', "You don't have a pin to register new member, please order pin");
-            return redirect()->route('pin.order')->with($pesan);
+            return redirect()->route('pinb.order')->with($pesan);
         }
         return view('member.register2')
                     ->with('dataLogin', $dataLogin)
@@ -55,13 +57,13 @@ class MemberController extends Controller{
     }
     
     public function postNewRegister(Request $request){
-        $pin = New PinMember;
+        $pin = New PinMemberB;
         $countFreePin = $pin->getCountFreePIN($this->user->id);
         $cekHavePin = $pin->getMemberHavePIN($this->user->id);
         $havePin = ($countFreePin > 0 && !empty($cekHavePin));
         if (!$havePin) {
             $pesan = $this->setPesanFlash('error', "You don't have any pin to register new member, please order pin");
-            return redirect()->route('pin.order')->with($pesan);
+            return redirect()->route('pinb.order')->with($pesan);
         }
 
         $statik = New Statik;
@@ -75,7 +77,7 @@ class MemberController extends Controller{
         $passwdConfirm = $request->password_confirm;
         if($passwd != $passwdConfirm){
             $pesan = $this->setPesanFlash('error', 'Password not identically.');
-            return redirect()->route('new.register')->with($pesan)->withInput();
+            return redirect()->route('new.register2')->with($pesan)->withInput();
         }
         $cekUser = $this->user;
         $dataValidation = (object) array('fullname' => $name, 'email' => $email, 'hp' => $hp, 'password' => $passwd, 'plan_status' => $sel);
@@ -143,7 +145,7 @@ class MemberController extends Controller{
         \Mail::to($email)->send(new OrderShipped($content));
         
         $pesan = $this->setPesanFlash('success', 'Success register, check your new register email');
-        return redirect()->route('new.register')->with($pesan);
+        return redirect()->route('new.register2')->with($pesan);
         
     }
 

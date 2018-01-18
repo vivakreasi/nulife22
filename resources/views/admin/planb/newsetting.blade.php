@@ -31,21 +31,36 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="form-group">
-                                    <div class="col-sm-10 col-sm-offset-1 col-lg-10 col-lg-offset-1">
-                                        <label class="control-label col-md-7" for="bonus_up_member_b">Bonus for Sponsor</label>
-                                        <div class="col-md-3">
-                                            <input type="text" class="form-control right-field" name="bonus_up_member_b" id="bonus_up_member_b"
-                                                   @if(session('pesan-flash') && session('pesan-flash')['type']=='error')
-                                                   value="{{ old('bonus_up_member_b') }}"
-                                                   @else
-                                                   value="{{ !empty($data) ? $data->bonus_up_member_b : 0 }}"
-                                                    @endif >
-                                        </div>
+                             <div class="row">
+                            <div class="form-group">
+                                <div class="col-sm-10 col-sm-offset-1 col-lg-10 col-lg-offset-1">
+                                    <label class="control-label col-md-7" for="bonus_sponsor">Sponsoring Bonus</label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control right-field" name="bonus_sponsor" id="bonus_sponsor" 
+                                        @if(session('pesan-flash') && session('pesan-flash')['type']=='error') 
+                                            value="{{ old('bonus_sponsor') }}"
+                                        @else 
+                                            value="{{ !empty($data) ? $data->bonus_sponsor : 0 }}"
+                                        @endif >
                                     </div>
                                 </div>
                             </div>
+                        </div>
+							<div class="row">
+                            <div class="form-group">
+                                <div class="col-sm-10 col-sm-offset-1 col-lg-10 col-lg-offset-1">
+                                    <label class="control-label col-md-7" for="bonus_pairing">Pairing Bonus</label>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control right-field" name="bonus_pairing" id="bonus_pairing" 
+                                        @if(session('pesan-flash') && session('pesan-flash')['type']=='error') 
+                                            value="{{ old('bonus_pairing') }}"
+                                        @else 
+                                            value="{{ !empty($data) ? $data->bonus_pairing : 0 }}"
+                                        @endif >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                             <div class="row">
                                 <div class="form-group">
                                     <div class="col-sm-10 col-sm-offset-1 col-lg-10 col-lg-offset-1">

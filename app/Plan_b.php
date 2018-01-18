@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Plan_c_board;
 use App\User;
 
-class Plan_c extends Model 
+class Plan_b extends Model 
 {
 
     /*  define tablename */
@@ -366,15 +366,6 @@ class Plan_c extends Model
                     ->get();
     }
 
-	    public function getActivePlanB() {
-        return $this->getAvailablePlanQuery()->join('users', 'users.id', 'tb_plan_b.user_id')
-                    ->selectRaw("tb_plan_b.*, users.userid, users.name")
-                    ->orderBy('tb_plan_b.id')
-                    ->take($this->maxActive)
-                    ->get();
-    }
-
-	
     private function getCountActivePlan() {
         $count =  $this->getAvailablePlanQuery()->count('tb_plan_c.id');
         return ($count > $this->maxActive) ? $this->maxActive : $count;

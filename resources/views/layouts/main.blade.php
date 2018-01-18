@@ -98,7 +98,7 @@
                                 @endif
                                 @if ($myUser->hasAccessRoute('pin.list') || $myUser->hasAccessRoute('admin.pin.list') || $myUser->hasAccessRoute('admin.pin.report'))
                                     <li class="">
-                                        <h3 class="navigation-title" style="padding-left: 50px !important;">PIN</h3>
+                                        <h3 class="navigation-title" style="padding-left: 50px !important;">A-PIN</h3>
                                     </li>
                                     @if ($myUser->hasAccessRoute('pin.list'))
                                         <li {!! (Route::currentRouteName()=='pin.list' || Route::currentRouteName()=='pin.invoice' ? 'class=active' : '') !!}><a href="{{ route('pin.list') }}"> List Buy Pin</a></li>
@@ -110,6 +110,31 @@
                                         <li {!! (Route::currentRouteName()=='admin.pin.report' ? 'class=active' : '') !!}><a href="{{ route('admin.pin.report') }}"> Report PIN</a></li>
                                     @endif
                                 @endif
+								
+							
+
+    @if ($myUser->hasAccessRoute('pinb.list') || $myUser->hasAccessRoute('admin.pinb.list') || $myUser->hasAccessRoute('admin.pinb.report'))
+                                    <li class="">
+                                        <h3 class="navigation-title" style="padding-left: 50px !important;">B-PIN</h3>
+                                    </li>
+                                    @if ($myUser->hasAccessRoute('pinb.list'))
+                                        <li {!! (Route::currentRouteName()=='pinb.list' || Route::currentRouteName()=='pinb.invoice' ? 'class=active' : '') !!}><a href="{{ route('pin.list') }}"> List Buy Pin</a></li>
+                                    @endif
+                                    @if ($myUser->hasAccessRoute('admin.pin.list'))
+                                        <li {!! (Route::currentRouteName()=='admin.pinb.list' ? 'class=active' : '') !!}><a href="{{ route('admin.pinb.list') }}"> Summary Activation PIN</a></li>
+                                    @endif
+                                    @if ($myUser->hasAccessRoute('admin.pin.report'))
+                                        <li {!! (Route::currentRouteName()=='admin.pinb.report' ? 'class=active' : '') !!}><a href="{{ route('admin.pinb.report') }}"> Report PIN</a></li>
+                                    @endif
+                                @endif
+								
+														
+								
+								
+								
+							
+								
+								
                                 @if ($myUser->hasAccessRoute('admin.member.list') || $myUser->hasAccessRoute('admin.member.not.wd.list') ||
                                     $myUser->hasAccessRoute('admin.report.reward.global') || $myUser->hasAccessRoute('admin.report.bonus.global') ||
                                     $myUser->hasAccessRoute('admin.member.leftright'))
@@ -232,14 +257,16 @@
                                 <h3 class="navigation-title">SETTINGS</h3>
                             </li>
                             <li class="menu-list
-                            {!! (in_array(Route::currentRouteName(), ['admin.plana.setting', 'admin.planb.setting', 'admin.planc.setting', 'admin.pin.setting', 'admin.partner.setting', 'admin.company.bank', 'admin.company.bank.add', 'admin.reward.setting', 'admin.reward.setting.add', 'admin.reward.setting.edit']) ? 'active' : '') !!}">
+                            {!! (in_array(Route::currentRouteName(), ['admin.plana.setting', 'admin.planb.setting', 'admin.planc.setting', 'admin.pin.setting', 'admin.pinb.setting', 'admin.partner.setting', 'admin.company.bank', 'admin.company.bank.add', 'admin.reward.setting', 'admin.reward.setting.add', 'admin.reward.setting.edit']) ? 'active' : '') !!}">
                                 <a href=""><i class="fa fa-cogs"></i>  <span>General Settings</span></a>
                                 <ul class="child-list">
                                     <li {!! (Route::currentRouteName()=='admin.plana.setting' ? 'class=active' : '') !!}><a href="{{ route('admin.plana.setting') }}"> Plan-A</a></li>
                                     <li {!! (Route::currentRouteName()=='admin.planb.setting' ? 'class=active' : '') !!}><a href="{{ route('admin.planb.setting') }}"> Plan-B</a></li>
                                     <li {!! (Route::currentRouteName()=='admin.planc.setting' ? 'class=active' : '') !!}><a href="{{ route('admin.planc.setting') }}"> Plan-C</a></li>
-                                    <li {!! (Route::currentRouteName()=='admin.pin.setting' ? 'class=active' : '') !!}><a href="{{ route('admin.pin.setting') }}"> PIN</a></li>
-                                    <li {!! (Route::currentRouteName()=='admin.partner.setting' ? 'class=active' : '') !!}><a href="{{ route('admin.partner.setting') }}"> Partner</a></li>
+                                    <li {!! (Route::currentRouteName()=='admin.pin.setting' ? 'class=active' : '') !!}><a href="{{ route('admin.pin.setting') }}"> PIN-A</a></li>
+                                    <li {!! (Route::currentRouteName()=='admin.pinb.setting' ? 'class=active' : '') !!}><a href="{{ route('admin.pinb.setting') }}"> PIN-B</a></li>
+                                    
+									<li {!! (Route::currentRouteName()=='admin.partner.setting' ? 'class=active' : '') !!}><a href="{{ route('admin.partner.setting') }}"> Partner</a></li>
                                     <li {!! in_array(Route::currentRouteName(), ['admin.reward.setting', 'admin.reward.setting.add', 'admin.reward.setting.edit']) ? 'class=active' : '' !!}><a href="{{ route('admin.reward.setting') }}"> Reward</a></li>
                                     <li {!! in_array(Route::currentRouteName(), ['admin.company.bank', 'admin.company.bank.add']) ? 'class=active' : '' !!}><a href="{{ route('admin.company.bank') }}"> Companie's Banks</a></li>
                                     <li {!! (Route::currentRouteName()=='admin.max.bank' ? 'class=active' : '') !!}><a href="{{ route('admin.max.bank') }}"> Maximum bank</a></li>
@@ -268,7 +295,11 @@
                                 <li {!! (Route::currentRouteName()=='new.register' ? 'class=active' : '') !!}><a href="{{ route('new.register') }}"> Register New Member</a></li>
                                 <li {!! (Route::currentRouteName()=='plan.direct.sponsor' ? 'class=active' : '') !!}><a href="{{ route('plan.direct.sponsor') }}"> Direct Sponsor</a></li>
                                 <li {!! (Route::currentRouteName()=='plan.placement' ? 'class=active' : '') !!}><a href="{{ route('plan.placement') }}"> Placement New Member</a></li>
-                            </ul>
+   <!--Add By Viva-->
+                            
+							<li {!! (Route::currentRouteName()=='new.register2' ? 'class=active' : '') !!}><a href="{{ route('new.register2') }}"> Register Plan B New Member</a></li>
+                            
+							</ul>
                         </li>
                         <li class="menu-list
                     {!! (in_array(Route::currentRouteName(), ['plan.network.binary', 'plan.network.level']) ? 'active' : '') !!}">
@@ -280,7 +311,7 @@
                         </li>
                         <li class="menu-list
                     {!! (in_array(Route::currentRouteName(), ['pin.my', 'pin.order', 'pin.list', 'pin.transfer', 'pin.invoice', 'pin.previous']) ? 'active' : '') !!}">
-                            <a href=""><i class="fa fa-ticket"></i>  <span>PIN</span></a>
+                            <a href=""><i class="fa fa-ticket"></i>  <span>A-PIN</span></a>
                             <ul class="child-list">
                                 <li {!! (Route::currentRouteName()=='pin.my' ? 'class=active' : '') !!}><a href="{{ route('pin.my') }}"> My Pin</a></li>
                                 <li {!! (Route::currentRouteName()=='pin.order' || Route::currentRouteName()=='pin.transfer' || Route::currentRouteName()=='pin.invoice' ? 'class=active' : '') !!}><a href="{{ route('pin.order') }}"> {{ (Auth::user()->isStockis() ? "Buy" : "Order") }}/Transfer Pin </a></li>
@@ -288,6 +319,17 @@
                                 <li {!! (Route::currentRouteName()=='pin.previous' ? 'class=active' : '') !!}><a href="{{ route('pin.previous') }}"> List<br /><small><em>(Previous PIN)</em></small></a></li>
                             </ul>
                         </li>
+						
+						 <li class="menu-list
+                    {!! (in_array(Route::currentRouteName(), ['pinb.my', 'pinb.order', 'pinb.list', 'pinb.transfer', 'pinb.invoice', 'pinb.previous']) ? 'active' : '') !!}">
+                            <a href=""><i class="fa fa-ticket"></i>  <span>B-PIN</span></a>
+                            <ul class="child-list">
+                                <li {!! (Route::currentRouteName()=='pinb.my' ? 'class=active' : '') !!}><a href="{{ route('pinb.my') }}"> My Pin</a></li>
+                                <li {!! (Route::currentRouteName()=='pinb.order' || Route::currentRouteName()=='pinb.transfer' || Route::currentRouteName()=='pinb.invoice' ? 'class=active' : '') !!}><a href="{{ route('pinb.order') }}"> {{ (Auth::user()->isStockis() ? "Buy" : "Order") }}/Transfer Pin </a></li>
+                                <li {!! (Route::currentRouteName()=='pinb.list' ? 'class=active' : '') !!}><a href="{{ route('pinb.list') }}"> List {{ (Auth::user()->isStockis() ? "Buy" : "Order") }}/Transfer Pin</a></li>
+                            </ul>
+                        </li>
+						
                         <li class="menu-list
                     {!! (in_array(Route::currentRouteName(), ['bonus', 'bonus.sponsor', 'bonus.pairing', 'bonus.upgrade.b', 'bonus.reward', 'bonus.reward.claim', 'bonus.previous', 'bonus.sponsor.previous', 'bonus.pairing.previous', 'bonus.upgrade.b.previous']) ? 'active' : '') !!}">
                             <a href=""><i class="fa fa-briefcase"></i>  <span>Bonus</span></a>
@@ -327,10 +369,8 @@
                     {!! (in_array(Route::currentRouteName(), ['plan.upgrade.b','plan.network.binary.b','plan.placement.b']) ? 'active' : '') !!}">
                             <a href=""><i class="fa fa-toggle-on"></i>  <span>Plan-B</span><span class="label noti-arrow bg-danger pull-right">New</span></a>
                             <ul class="child-list">
-                                @if (Auth::user()->showUpgradeToB())
-                                <li {!! (Route::currentRouteName()=='plan.upgrade.b' ? 'class=active' : '') !!}><a href="{{ route('plan.upgrade.b') }}"> Upgrade To Plan-B</a></li>
-                                @endif
-                                <li {!! (Route::currentRouteName()=='plan.network.binary.b' ? 'class=active' : '') !!}><a href="{{ route('plan.network.binary.b') }}"> Network</a></li>
+                                
+								<li {!! (Route::currentRouteName()=='plan.network.binary.b' ? 'class=active' : '') !!}><a href="{{ route('plan.network.binary.b') }}"> Network</a></li>
                                 <li {!! (Route::currentRouteName()=='plan.placement.b' ? 'class=active' : '') !!}><a href="{{ route('plan.placement.b') }}"> Placement</a></li>
                             </ul>
                         </li>

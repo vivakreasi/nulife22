@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Pin_setting extends Model
+class Pin_settingb extends Model
 {
-    protected $table = 'tb_pin_type';
+    protected $table = 'tb_pinb_type';
 
     protected $fillable = array('pin_type_name', 'business_rights_amount', 'pin_type_price', 'pin_type_stockis_price', 'pin_type_masterstockis_price');
 

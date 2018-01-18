@@ -29,6 +29,9 @@ Route::name('dashboard')->get('/dashboard', 'PlanController@index')->middleware(
 //Register new anggota inside member
 Route::name('new.register')->get('/new/register', 'MemberController@getNewRegister')->middleware('auth');
 Route::name('new.register')->post('/new/register', 'MemberController@postNewRegister')->middleware('auth');
+//Add By Viva
+Route::name('new.register2')->get('/new/register2', 'MemberController2@getNewRegister')->middleware('auth');
+Route::name('new.register2')->post('/new/register2', 'MemberController2@postNewRegister')->middleware('auth');
 
 //Profile Member
 Route::name('my.profile')->get('/my/profile', 'MemberController@getMyProfile')->middleware('auth');
@@ -54,7 +57,7 @@ Route::prefix('plan')->middleware('auth')->group(function () {
     Route::name('plan.direct.sponsor.ajax')->get('/sponsored/ajax', 'PlanController@ajaxDirectSponsored');
     Route::name('plan.placement')->get('/placement/{from?}/{top?}', 'PlanController@memberPlacement');
     Route::name('plan.placement.post')->post('/placement/do', 'PlanController@doMemberPlacement');
-    //placement plan-b
+    //placement plan-b Add By Viva
     Route::name('plan.placement.b')->get('/placement-b/{from?}/{top?}', 'PlanBController@memberPlacement');
     Route::name('plan.placement.b.post')->post('/placement-b/do', 'PlanBController@doMemberPlacement');
 
@@ -167,7 +170,25 @@ Route::prefix('planc')->middleware('auth')->group(function () {
 });
 
 Route::prefix('planb')->middleware('auth')->group(function () {
+   //  dashboard
+    Route::name('planb')->get('/', 'PlanB1Controller@index');
+    Route::name('planb.ajax.queue')->get('/ajax/queue', 'PlanB1Controller@ajaxQueue');
     //  join
+    Route::name('planb.join')->get('/join', 'PlanB1Controller@join');
+    Route::name('planb.dojoin')->post('/join', 'PlanB1Controller@join');
+    //  status
+    Route::name('planb.status.order')->get('/status', 'PlanB1Controller@statusOrder');
+    //  bonus list
+    Route::name('planb.bonus')->get('bonus', 'PlanB1Controller@bonusList');
+    Route::name('planb.bonus.success')->get('bonus/success', 'PlanB1Controller@bonusSuccessList');
+    Route::name('planb.bonus.leadership')->get('bonus-leadership', 'PlanB1Controller@bonusListLeadership');
+    Route::name('planb.bank')->get('bank', 'PlanB1Controller@userBank');
+    Route::name('planb.bank.add')->get('bank/add', 'PlanB1Controller@addUserBank');
+    Route::name('planb.bank.add')->post('bank/add', 'PlanB1Controller@addUserBank');
+    Route::name('planb.bank.edit')->get('bank/edit/{id}', 'PlanB1Controller@editUserBank');
+    Route::name('planb.bank.edit')->post('bank/edit/{id}', 'PlanB1Controller@editUserBank');
+  
+ //  join
     Route::name('planb.join')->get('/join', 'PlanCController@join');
     Route::name('planb.postjoin')->post('/join', 'PlanCController@join');
 });
@@ -233,6 +254,10 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     // PIN setting
     Route::name('admin.pin.setting')->get('/pin/setting', 'AdminController@settingPin');
     Route::name('admin.pin.setting')->post('/pin/setting', 'AdminController@settingPin');
+	// PIN setting
+    Route::name('admin.pinb.setting')->get('/pinb/setting', 'AdminController@settingPinb');
+    Route::name('admin.pinb.setting')->post('/pinb/setting', 'AdminController@settingPinb');
+	
     // List bank company
     Route::name('admin.company.bank')->get('/company/bank', 'AdminController@listCompanyBank');
     Route::name('admin.company.ajax.bank')->get('/company/ajax/bank', 'AdminController@ajaxListCompanyBank');
@@ -264,7 +289,16 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::name('admin.pin.report.ajax.used')->get('/pin/report/ajax-used/{id}', 'AdminController@ajaxReportPinUsedActive');
     Route::name('admin.pin.report.xls')->get('/pin/report/xls', 'AdminController@getExcelReportPin');
     Route::name('admin.pin.generate')->get('/pin/generate/{userid}/{type}/{pin}', 'AdminController@generatePin');
-    //Member
+    //PIN B Activation
+    Route::name('admin.pinb.list')->get('/pinb/list', 'AdminController@getListActivationBPIN');
+    Route::name('admin.pinb.ajax')->get('/pinb/ajax', 'AdminController@getAjaxActivationBPIN');
+    Route::name('admin.pinb.report')->get('/pinb/report', 'AdminController@reportPin');
+    Route::name('admin.pinb.report.ajax')->get('/pinb/report/ajax', 'AdminController@ajaxReportPin');
+    Route::name('admin.pinb.report.ajax.used')->get('/pinb/report/ajax-used/{id}', 'AdminController@ajaxReportPinUsedActive');
+    Route::name('admin.pinb.report.xls')->get('/pinb/report/xls', 'AdminController@getExcelReportPin');
+    Route::name('admin.pinb.generate')->get('/pinb/generate/{userid}/{type}/{pin}', 'AdminController@generatePin');
+    
+	//Member
     Route::name('admin.member.list')->get('/member/list', 'AdminController@getListAllMembers');
     Route::name('admin.member.ajax')->get('/member/ajax', 'AdminController@getAjaxAllMembers');
     Route::name('admin.planbmember.list')->get('/planbmember/list', 'AdminController@getListPlanBMembers');
@@ -405,6 +439,34 @@ Route::prefix('pin')->middleware('auth')->group(function () {
     Route::name('pin.previous')->get('/previous', 'PinController@previousPin');
     Route::name('pin.ajax.previous')->get('/ajax/previous', 'PinController@ajaxPreviousPin');
 });
+
+
+/*
+ * Route untuk modul Pin B
+ * @prefix      : pin     --> /pin/***
+ * @middleware  : 'auth'    --> route ini hanya bisa diakses oleh member setelah login
+ */
+Route::prefix('pinb')->middleware('auth')->group(function () {
+    Route::name('pinb.my')->get('/my', 'PinBController@myPin');
+    Route::name('pinb.ajax.my')->get('/ajax/my', 'PinBController@ajaxListMy');
+    Route::name('pinb.order')->get('/order', 'PinBController@orderPin');
+    Route::name('pinb.order')->post('/order', 'PinBController@orderPin');
+    Route::name('pinb.buy')->post('/buy', 'PinBController@buyPin');
+    Route::name('pinb.transfer')->post('/transfer', 'PinBController@transferPin');
+    Route::name('pinb.list')->get('/list', 'PinBController@listOrder');
+    Route::name('pinb.ajax.list')->get('/ajax/list', 'PinBController@ajaxListOrder');
+    Route::name('pinb.invoice')->get('/invoice/{transaction_code}', 'PinBController@invoicePin');
+    Route::name('pinb.order.post')->post('/order/post', 'PinBController@orderPinPost');
+    Route::name('pinb.confirm')->post('/confirm', 'PinBController@confirmOrder');
+    Route::name('pinb.confirm.image')->get('/image/confirm', 'ImageController@showImageConfirmPin');
+    Route::name('pinb.ajax.getdatauser')->get('/ajax-getdatauser/{userid}/{is_id}', 'PinBController@getdatauser');
+    //  previous pin, converted, old pin
+    Route::name('pinb.previous')->get('/previous', 'PinBController@previousPin');
+    Route::name('pinb.ajax.previous')->get('/ajax/previous', 'PinBController@ajaxPreviousPin');
+});
+
+
+
 #
 #
 #Route::get('/referal-link/{code}', 'ActivationController@getReferalLink');

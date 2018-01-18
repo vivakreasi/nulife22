@@ -5,12 +5,12 @@
 @section('content')
     @if($havePin)
         <section class="panel">
-            <form class="form-horizontal" role="form" method="POST" action="{{ route('new.register') }}">
+            <form class="form-horizontal" role="form" method="POST" action="{{ route('new.register2') }}">
                 <div class="panel-body">
                     {{ csrf_field() }}
 
                     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                <label for="name" class="col-md-4 control-label">Name</label>
+                                <label for="name" class="col-md-4 control-label">Name </label>
 
                                 <div class="col-md-6">
                                     <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
@@ -79,7 +79,7 @@
                                         <div class="col-md-6">
                                             <select class="form-control select2-offscreen" id="sel_product" name="sel_product">
                                                 <option value="">Select Plan</option>
-                                                <option value="0">-- Plan A --</option>
+                                                <option value="3">-- Plan B --</option>
                                                 
                                             </select>
                                             <span class="text-danger"><em>{{ ($errors->has('sel_product')) ? $errors->first('sel_product') : '' }}</em></span>

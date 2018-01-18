@@ -549,10 +549,12 @@ class AdminController extends Controller
         $setting = $planB->getSetting();
         if ($request->isMethod('post')) {
             $id = $request->get('id');
-            $values = array('bonus_up_member_b'     => $request->get('bonus_up_member_b', 0),
+            $values = array('bonus_sponsor'     => $request->get('bonus_sponsor', 0),
+							'bonus_up_member_b'     => $request->get('bonus_sponsor', 0),
                             'require_planb'         => intval($request->get('require_planb', '0')),
                             'bonus_split_nupoint'   => $request->get('bonus_split_nupoint', 0),
                             'product_id'            => $request->get('sel_product', 0),
+							 'bonus_pairing'            => $request->get('bonus_pairing', 0),
                             'subsidi_tarif_kirim'   => $request->get('subsidi_tarif_kirim', 0));
             if ($planB->updateSetting($id, $values)) {
                 $pesan = $this->setPesanFlash('success', 'Plan-B Setting has been successfully saved.');
@@ -656,7 +658,7 @@ class AdminController extends Controller
     public function settingPin(Request $request)
     {
         $PIN = new \App\Pin_setting;
-        $this->setPageHeader('Setting PIN');
+        $this->setPageHeader('Setting PIN-A');
         if (!$this->user->isAdminAll()) return view('404');
         $setting = $PIN->getSetting();
         if ($request->isMethod('post')) {
@@ -679,6 +681,34 @@ class AdminController extends Controller
         }
 
         return view('admin.pin.setting')
+            ->with('data', $setting);
+    }
+    public function settingPinb(Request $request)
+    {
+        $PIN = new \App\Pin_settingb;
+        $this->setPageHeader('Setting PIN - B');
+        if (!$this->user->isAdminAll()) return view('404');
+        $setting = $PIN->getSetting();
+        if ($request->isMethod('post')) {
+            $id = $request->get('id');
+            $values = array(
+                'pin_type_name'                 => $request->get('pin_type_name', 0),
+                'business_rights_amount'        => $request->get('business_rights_amount', 0),
+                'pin_type_price'                => intval($request->get('pin_type_price', '0')),
+                'pin_type_stockis_price'        => intval($request->get('pin_type_stockis_price', '0')),
+                'pin_type_masterstockis_price'  => intval($request->get('pin_type_masterstockis_price', '0'))
+            );
+
+            if ($PIN->updateSetting($id, $values)) {
+                $pesan = $this->setPesanFlash('success', 'PIN Setting has been successfully saved.');
+                return redirect()->route('admin.pinb.setting')->with($pesan);
+            } else {
+                $pesan = $this->setPesanFlash('error', 'Failed to save Partner Setting.');
+                return redirect()->route('admin.pinb.setting')->with($pesan)->withInput();
+            }
+        }
+
+        return view('admin.pinb.setting')
             ->with('data', $setting);
     }
 
@@ -1018,6 +1048,32 @@ class AdminController extends Controller
         return $data->make();
     }
     
+	
+	
+	
+    public function getListActivationBPIN(){
+        $this->setPageHeader('Summary Activation B-PIN');
+        if (!$this->user->hasAccessRoute('admin.pinb.list')) return view('404');
+        return view('admin.pinb.list');
+    }
+    
+    public function getAjaxActivationBPIN(){
+        if (!$this->user->hasAccessRoute('admin.pinb.list')) return view('404');
+        $pin_member = new \App\PinMemberB;
+        $pinAll = $pin_member->getAllUsedPIN();
+        $data = Datatables::collection($pinAll);
+        if (!empty($data->collection)) {
+            $no = 0;
+            foreach ($data->collection as $row) {
+                $no++;
+                $row->no = $no;
+                $row->amount = number_format($row->amount, 0, ',', '.') .',-';
+            }
+        }
+        return $data->make();
+    }
+    
+	
     public function getListAllMembers(){
         $this->setPageHeader('All Member ');
         if (!$this->user->hasAccessRoute('admin.member.list')) return view('404');
